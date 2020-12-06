@@ -1,2 +1,2 @@
 ##A simple challenge to do a simulated ATM machine terminal
-TODO docs
+docs will be right [here](docs/main.md)
