@@ -7,8 +7,8 @@
     "doc": "docs"
   },
   "scripts": {
-    "test:local": "cross-env NODE_PATH=. NODE_ENV=DEVELOPMENT mocha --config test/.mocharc.json",
-    "test:docker": "cross-env NODE_PATH=. NODE_ENV=TEST mocha --config test/.mocharc.json"
+    "start": "cross-env NODE_PATH=. node --inspect=0.0.0.0:3306 index.js",
+    "test:local": "cross-env NODE_PATH=. NODE_ENV=DEVELOPMENT mocha --config test/.mocharc.json"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/GabrielGCardoso/atm_simulator#readme",
   "dependencies": {
+    "cross-env": "^7.0.3",
     "mysql": "^2.18.1",
     "mysql2": "^2.2.5",
     "sequelize": "^6.3.5"
