@@ -10,6 +10,7 @@ services:
       - db
     depends_on: 
       - db
+    command: sh -c "./wait-for db:3306 -- npm run start"
 
   db:
     # build: ./db
