@@ -1,16 +1,17 @@
-FROM node:10
+FROM node:10.16-alpine
 
-WORKDIR /usr/src/app
+RUN addgroup -S app && adduser -S -g app app
 
-COPY package*.json ./
+ENV HOME=/usr/src
+WORKDIR ${HOME}/app
+ENV NODE_PATH=.
+ENV NODE_ENV=TEST
 
-RUN npm install
+COPY ["./", "${HOME}/app/"]
 
-COPY . .
-
-RUN ./initdb.sh
+RUN chmod +x ./wait-for && \
+    npm install --silent --progress=false --production
 
 EXPOSE 3000
 
-# CMD ["npm", "run", "docker"]
-CMD ["node", "src/index.js"]
+CMD ["npm", "run", "start"]
