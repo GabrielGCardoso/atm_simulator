@@ -5,7 +5,7 @@
     "database": "atm_example",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "timestamps":false
+    "timestamps": false
   },
   "test": {
     "username": "root",
@@ -13,7 +13,7 @@
     "database": "atm_example",
     "host": "db",
     "dialect": "mysql",
-    "timestamps":false
+    "timestamps": false
   },
   "production": {
     "username": "root",
@@ -21,6 +21,6 @@
     "database": "atm_example",
     "host": "db",
     "dialect": "mysql",
-    "timestamps":false
+    "timestamps": false
   }
 }

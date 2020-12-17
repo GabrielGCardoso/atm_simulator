@@ -5,5 +5,7 @@ module.exports = {
         const app = require('./router');
 
         app.listen(PORT, () => console.log(`server is listening on port  ${PORT}`));
+
+        return app;
     },
 };
