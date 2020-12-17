@@ -3,7 +3,7 @@
     "js"
   ],
   "file": "test/setup.js",
-  "spec": "test/**/*.spec.js",
+  "spec": "test/feature/**/*.spec.js",
   "timeout": 10000,
   "color": true,
   "ui": "bdd",
