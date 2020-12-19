@@ -11,8 +11,8 @@
     "dev-debug": "cross-env NODE_ENV=TEST node index.js",
     "dev": "cross-env NODE_PATH=. NODE_ENV=DEVELOPMENT nodemon",
     "test": "npm run test:unit && npm run test:feature",
-    "test:unit": "cross-env NODE_PATH=. NODE_ENV=DEVELOPMENT mocha --config test/.mocharc.unit.json",
-    "test:feature": "cross-env NODE_PATH=. NODE_ENV=DEVELOPMENT mocha --config test/.mocharc.feature.json"
+    "test:unit": "cross-env NODE_PATH=. NODE_ENV=DEVELOPMENT mocha --config test/.mocharc.unit.json --exit",
+    "test:feature": "cross-env NODE_PATH=. NODE_ENV=DEVELOPMENT mocha --config test/.mocharc.feature.json --exit"
   },
   "repository": {
     "type": "git",
