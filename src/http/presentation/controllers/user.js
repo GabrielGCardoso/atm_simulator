@@ -1,4 +1,4 @@
-const creatUserCommand = require('src/app/commands/createUserCommand');
+const creatUserCommand = require('src/app/commands/userCommands/createUserCommand');
 
 const createUser = async (req, res) => {
     const { cpf, name, birthday_date } = req.body;

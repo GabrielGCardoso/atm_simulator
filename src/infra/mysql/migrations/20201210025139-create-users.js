@@ -1,5 +1,4 @@
 'use strict';
-const DataTypes = require('sequelize/lib/data-types');
 
 module.exports = {
     up: (queryInterface, Sequelize) => {
@@ -15,7 +14,7 @@ module.exports = {
                 allowNull: false,
             },
             cpf: {
-                type: DataTypes.STRING,
+                type: Sequelize.STRING,
                 allowNull: false,
             },
             birthday_date: {
@@ -32,7 +31,7 @@ module.exports = {
             },
         });
     },
-    down: (queryInterface, /* Sequelize */) => {
-        return queryInterface.dropTable('Users');
+    down: (queryInterface /*, Sequelize */) => {
+        return queryInterface.dropTable('users');
     },
 };
