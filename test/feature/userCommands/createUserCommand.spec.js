@@ -7,7 +7,7 @@ describe('API :: POST user/create', () => {
         let payload;
         beforeEach(async () => {
             payload = {
-                name: 'gabriel',
+                name: 'User Name',
                 cpf: '010.011.012-13',
                 birthday_date: '10/10/2001',
             };
@@ -20,7 +20,7 @@ describe('API :: POST user/create', () => {
                 .expect(201);
 
             expect(body.id).to.be.exist();
-            expect(body.name).to.be.eql('gabriel');
+            expect(body.name).to.be.eql('User Name');
         });
     });
 });

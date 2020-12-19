@@ -1,8 +1,7 @@
 'use strict';
-const DataTypes = require('sequelize/lib/data-types');
 
-module.exports = (sequelize/*, DataTypes */) => {
-    const Users = sequelize.define(
+module.exports = (sequelize, DataTypes) => {
+    const users = sequelize.define(
         'users',
         {
             name: {
@@ -20,8 +19,8 @@ module.exports = (sequelize/*, DataTypes */) => {
         },
         {}
     );
-    Users.associate = function (models) {
-        // associations can be defined here
+    users.associate = function (models) {
+        users.belongsTo(models.accounts);
     };
-    return Users;
+    return users;
 };
