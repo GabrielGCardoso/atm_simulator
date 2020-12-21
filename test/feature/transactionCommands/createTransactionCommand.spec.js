@@ -26,13 +26,13 @@ describe('API :: POST transaction/create', () => {
                 .send(newAccount);
 
             const transactionType = {
-                DEPOSIT: 1,
-                WITHDRAW: 2,
+                INCOMING: 1,
+                OUTGOING: 2,
             };
 
             payload = {
                 account_id: respCreateAccount.id,
-                type: transactionType.DEPOSIT,
+                type: transactionType.INCOMING,
                 amount: 223.45,
             };
         });
