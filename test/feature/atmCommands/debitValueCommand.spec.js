@@ -45,5 +45,18 @@ describe('API :: POST atm-machine/debit', () => {
 
             expect(body.account_id).to.be.eql(incomingTransaction.account_id);
         });
+
+        it('debit with error, insufficient funds', async () => {
+            await request()
+                .post('/atm-machine/debit')
+                .send({
+                    account_id: incomingTransaction.account_id,
+                    outgoing: 999,
+                })
+                .catch((error) => {
+                    expect(error.message).to.be.eql('Insufficient funds');
+                    expect(error.error_code).to.be.equal('422');
+                });
+        });
     });
 });
