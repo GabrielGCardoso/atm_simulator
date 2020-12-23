@@ -19,7 +19,7 @@ class Repository {
      * @return {Array} an array of tuples with sum values at column total_amount
      * @example additionalColumns: ['u_id','col2'],
      */
-    async sum({ column, query, additionalColumns=[] }) {
+    async sum({ column, query, additionalColumns = [] }) {
         const result = await this.entity.findAll({
             attributes: [
                 ...additionalColumns,
@@ -28,6 +28,18 @@ class Repository {
             ...query,
         });
         return result;
+    }
+
+    async count(query) {
+        return this.entity.count({
+            ...query,
+        });
+    }
+
+    async findOne(query) {
+        return this.entity.findOne({
+            ...query,
+        });
     }
 }
 module.exports = Repository;
