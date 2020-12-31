@@ -36,6 +36,10 @@ class Repository {
         });
     }
 
+    async destroy(query) {
+        return this.entity.destroy(query);
+    }
+
     async findOne(query) {
         return this.entity.findOne({
             ...query,
