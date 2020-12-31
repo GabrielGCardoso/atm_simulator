@@ -1,5 +1,6 @@
 const Repository = require('./repository.js');
 const { transactions } = require('../mysql/models');
+const { Errors, Exceptions } = require('src/infra/exceptions');
 
 class TransactionRepository extends Repository {
     constructor() {
@@ -25,9 +26,7 @@ class TransactionRepository extends Repository {
         try {
             return await super.create(accountData);
         } catch (error) {
-            console.log('TransactionRepository Error:', error);
-            //business error
-            // throw new Error('invalid data to create account');
+            throw Exceptions.business(Errors.INVALID_DATA);
         }
     }
 }
