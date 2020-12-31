@@ -1,24 +1,27 @@
-const TransactionRepository = require('src/infra/repository/TransactionRepository');
-const StateMachineService = require('src/app/services/StateMachineService');
+const TransactionRepository = require('src/infra/repository/transactionRepository');
+const StateMachineService = require('src/app/services/stateMachineService');
+const TransactionTypesEnum = require('src/app/services/transactionService/transactionTypesEnum');
+const { Errors, Exceptions } = require('src/infra/exceptions');
 
 class TransactionService {
     constructor() {
         this.repository = new TransactionRepository();
         this.stateMachine = new StateMachineService();
+        this.transactionTypesEnum = TransactionTypesEnum;
     }
 
     async debit(account_id, amount) {
         if (await this.stateMachine.isInCriticalZoneAccount(account_id))
-            throw Exception.business(
-                'Account in use, if is not you call to bank to report this activity'
-            );
+            throw Exceptions.business(Errors.ACCOUNT_IN_CRITICAL_ZONE);
 
-        return this.repository
-            .create({ account_id, amount, type: 2 })
-            .then((result) => {
-                this.stateMachine.freeCriticalZoneAccount(account_id);
-                return result;
-            });
+        const result = this.repository.create({
+            account_id,
+            amount,
+            type: this.transactionTypesEnum.OUTGOING,
+        });
+
+        await this.stateMachine.freeCriticalZoneAccount(account_id);
+        return result;
     }
 
     async create(data) {
@@ -26,7 +29,22 @@ class TransactionService {
     }
 
     async getBalance(account_id) {
-        return this.repository.getBalance(account_id);
+        try {
+            const incoming =
+                (await this.repository.sumTransactionByType(
+                    account_id,
+                    this.transactionTypesEnum.INCOMING
+                )) || 0;
+
+            const outgoing =
+                (await this.repository.sumTransactionByType(
+                    account_id,
+                    this.transactionTypesEnum.OUTGOING
+                )) || 0;
+            return incoming - outgoing;
+        } catch (error) {
+            console.error(error);
+        }
     }
 }
 

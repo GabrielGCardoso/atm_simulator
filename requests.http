@@ -1,0 +1,17 @@
+###Creating Client
+POST http://localhost:3000/user/create HTTP/1.1
+content-type: application/json
+
+{
+    "name": "A Wonderful Name",
+    "cpf": "010.011.012-13",
+    "birthday_date": "10/10/2001"
+}
+###Creating account
+POST http://localhost:3000/account/create HTTP/1.1
+content-type: application/json
+
+{
+    "user_id": 1,
+    "type": 1
+}

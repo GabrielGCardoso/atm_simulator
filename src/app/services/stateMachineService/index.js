@@ -10,14 +10,14 @@ class StateMachineService {
 
     async isInCriticalZoneAccount(account_id) {
         return this.repository.askSettingCriticalZone({
-            id: account_id,
+            entity_id: account_id,
             entity: this.entityEnum.ACCOUNT,
         });
     }
 
     async freeCriticalZoneAccount(account_id) {
         return this.repository.removeFromCriticalZone({
-            id: account_id,
+            entity_id: account_id,
             entity: this.entityEnum.ACCOUNT,
         });
     }
