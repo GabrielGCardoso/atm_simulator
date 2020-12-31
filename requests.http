@@ -15,3 +15,21 @@ content-type: application/json
     "user_id": 1,
     "type": 1
 }
+
+###Credit value from a account
+POST http://localhost:3000/atm-machine/credit HTTP/1.1
+content-type: application/json
+
+{
+    "account_id": 0,
+    "incoming": 12.3
+}
+
+###Debit value from a account
+POST http://localhost:3000/atm-machine/debit HTTP/1.1
+content-type: application/json
+
+{
+    "account_id": 1,
+    "outgoing": 12.3
+}
