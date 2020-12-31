@@ -2,9 +2,9 @@ const { describe, it } = require('mocha');
 const { expect } = require('chai');
 const request = require('test/support/request');
 
-describe('API :: POST atm-machine/debit', () => {
+describe('API :: POST atm-machine/credit', () => {
     context('creating account with success', async () => {
-        let incomingTransaction;
+        let account_id;
         beforeEach(async () => {
             const newUser = {
                 name: 'A Wonderful Name',
@@ -23,36 +23,34 @@ describe('API :: POST atm-machine/debit', () => {
                 .post('/account/create')
                 .send(newAccount);
 
-            incomingTransaction = {
-                account_id: respNewAccount.id,
-                incoming: 22.45,
-            };
-            await request().post('/atm-machine/credit').send(incomingTransaction);
+            account_id = respNewAccount.id;
         });
 
-        it('debit a value with success', async () => {
+        it('credit a value with success', async () => {
             const { body } = await request()
-                .post('/atm-machine/debit')
+                .post('/atm-machine/credit')
                 .send({
-                    account_id: incomingTransaction.account_id,
-                    outgoing: 2.24,
+                    account_id: account_id,
+                    incoming: 2.24,
                 })
                 .expect(201);
 
-            expect(body.account_id).to.be.eql(incomingTransaction.account_id);
+            expect(body.account_id).to.be.eql(account_id);
         });
 
-        it('debit with error, insufficient funds', async () => {
+        it('credit with error', async () => {
             await request()
-                .post('/atm-machine/debit')
+                .post('/atm-machine/credit')
                 .send({
-                    account_id: incomingTransaction.account_id,
-                    outgoing: 23,
+                    account_id: -1,
+                    incoming: 23,
                 })
-                .catch((error) => {
-                    expect(error.message).to.be.eql('Insufficient funds');
-                    expect(error.error_code).to.be.equal('422');
-                });
+                .then(res => {
+                    const { message, error_code } = res.body;
+
+                    expect(message).to.be.eql("Invalid data");
+                    expect(error_code).to.be.equal('422');
+                })
         });
     });
 });

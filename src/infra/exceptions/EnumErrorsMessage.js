@@ -1,4 +1,5 @@
 module.exports = {
     INSUFFICIENT_FUNDS: 'Insufficient funds',
-    ACCOUNT_IN_CRITICAL_ZONE: 'Account in use, if is not you call to bank to report this activity'
+    ACCOUNT_IN_CRITICAL_ZONE: 'Account in use, if is not you call to bank to report this activity',
+    INVALID_DATA: 'Invalid data'
 };
