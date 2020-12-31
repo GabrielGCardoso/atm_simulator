@@ -10,6 +10,14 @@ class TransactionService {
         this.transactionTypesEnum = TransactionTypesEnum;
     }
 
+    async credit(account_id, amount) {
+        return this.repository.create({
+            account_id,
+            amount,
+            type: this.transactionTypesEnum.INCOMING,
+        });
+    }
+
     async debit(account_id, amount) {
         if (await this.stateMachine.isInCriticalZoneAccount(account_id))
             throw Exceptions.business(Errors.ACCOUNT_IN_CRITICAL_ZONE);
