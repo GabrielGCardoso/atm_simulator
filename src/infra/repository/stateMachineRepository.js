@@ -16,21 +16,20 @@ class StateMachineRepository extends Repository {
         return !!count;
     }
 
-    async removeFromCriticalZone({ entity, id }) {
-        return super.findOne({ where: { entity, entity_id: id } }).then((row) => {
-            return row.destroy();
-        });
+    async removeFromCriticalZone({ entity, entity_id }) {
+        return super.destroy({ where: { entity, entity_id } })
     }
 
-    async setCriticalZone(entity, id) {
-        return this.create({ entity, entity_id: id })
-            .then((_) => true)
-            .catch((_) => false);
+    async setCriticalZone(entity, entity_id) {
+        await this.create({ entity, entity_id })
     }
 
-    async askSettingCriticalZone({ entity, id }) {
-        if (await this.isInCriticalZone(entity, id)) return false;
-        return this.setCriticalZone(entity, id);
+    async askSettingCriticalZone({ entity, entity_id }) {
+        if (await this.isInCriticalZone(entity, entity_id)) 
+            return true;
+
+        await this.setCriticalZone(entity, entity_id);
+        return false;
     }
 }
 
