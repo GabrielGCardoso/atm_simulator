@@ -11,9 +11,7 @@ describe('API :: POST atm-machine/debit', () => {
                 cpf: '010.011.012-13',
                 birthday_date: '10/10/2001',
             };
-            const { body: respCreateUser } = await request()
-                .post('/user/create')
-                .send(newUser);
+            const { body: respCreateUser } = await request().post('/user/create').send(newUser);
 
             const accountType = { CHECKING_ACCOUNT: 1 };
             const newAccount = {
@@ -25,13 +23,11 @@ describe('API :: POST atm-machine/debit', () => {
                 .post('/account/create')
                 .send(newAccount);
 
-            const transactionType = { INCOMING: 1, OUTGOING: 2 };
             incomingTransaction = {
                 account_id: respNewAccount.id,
-                type: transactionType.INCOMING,
-                amount: 22.45,
+                incoming: 22.45,
             };
-            await request().post('/transaction/create').send(incomingTransaction);
+            await request().post('/atm-machine/credit').send(incomingTransaction);
         });
 
         it('debit a value with success', async () => {
@@ -41,7 +37,7 @@ describe('API :: POST atm-machine/debit', () => {
                     account_id: incomingTransaction.account_id,
                     outgoing: 2.24,
                 })
-                .expect(200);
+                .expect(201);
 
             expect(body.account_id).to.be.eql(incomingTransaction.account_id);
         });
@@ -51,7 +47,7 @@ describe('API :: POST atm-machine/debit', () => {
                 .post('/atm-machine/debit')
                 .send({
                     account_id: incomingTransaction.account_id,
-                    outgoing: 999,
+                    outgoing: 23,
                 })
                 .catch((error) => {
                     expect(error.message).to.be.eql('Insufficient funds');
