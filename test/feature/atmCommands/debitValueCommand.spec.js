@@ -25,9 +25,33 @@ describe('API :: POST atm-machine/debit', () => {
 
             incomingTransaction = {
                 account_id: respNewAccount.id,
-                incoming: 22.45,
+                incoming: 50,
             };
             await request().post('/atm-machine/credit').send(incomingTransaction);
+        });
+
+        it('debit a value with error invalid banknotes', async () => {
+            const { body } = await request()
+                .post('/atm-machine/debit')
+                .send({
+                    account_id: incomingTransaction.account_id,
+                    outgoing: 22,
+                })
+                .expect(422);
+
+            expect(body.message).to.be.eql('invalid value only allowed to withdraw amounts with notes of 20, 50 and 100');
+        });
+
+        it('debit a value with error insufficient cash on ATM', async () => {
+            const { body } = await request()
+                .post('/atm-machine/debit')
+                .send({
+                    account_id: incomingTransaction.account_id,
+                    outgoing: 40,
+                })
+                .expect(422);
+
+            expect(body.message).to.be.eql('insufficient cash, try another ATM');
         });
 
         it('debit a value with success', async () => {
@@ -35,7 +59,7 @@ describe('API :: POST atm-machine/debit', () => {
                 .post('/atm-machine/debit')
                 .send({
                     account_id: incomingTransaction.account_id,
-                    outgoing: 2.24,
+                    outgoing: 20,
                 })
                 .expect(201);
 
