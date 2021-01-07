@@ -26,7 +26,7 @@ class TransactionRepository extends Repository {
         try {
             return await super.create(accountData);
         } catch (error) {
-            throw Exceptions.business(Errors.INVALID_DATA);
+            throw Exceptions.contract(Errors.INVALID_DATA);
         }
     }
 }
