@@ -49,7 +49,7 @@ describe('API :: POST atm-machine/credit', () => {
                     const { message, error_code } = res.body;
 
                     expect(message).to.be.eql("Invalid data");
-                    expect(error_code).to.be.equal('422');
+                    expect(error_code).to.be.equal('400');
                 })
         });
     });

@@ -71,12 +71,25 @@ describe('API :: POST atm-machine/debit', () => {
                 .post('/atm-machine/debit')
                 .send({
                     account_id: incomingTransaction.account_id,
-                    outgoing: 23,
+                    outgoing: 50,
                 })
                 .catch((error) => {
                     expect(error.message).to.be.eql('Insufficient funds');
                     expect(error.error_code).to.be.equal('422');
                 });
         });
+        it('debit with error, invalid value', async () => {
+            await request()
+                .post('/atm-machine/debit')
+                .send({
+                    account_id: incomingTransaction.account_id,
+                    outgoing: 22,
+                })
+                .catch((error) => {
+                    expect(error.message).to.be.eql('invalid value only allowed to withdraw amounts with notes of 20, 50 and 100');
+                    expect(error.error_code).to.be.equal('422');
+                });
+        });
+
     });
 });
